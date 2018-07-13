@@ -2,14 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Calculadora</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="estilo.css">
     <script>
         $(document).ready(function () {
             $("#gerador").click(function(){
                var rede = $("#rede").val();
                var mask = $("#mask").val();
-               $.get("exe.php",{rede : rede, mask : mask}, function (data) {
+               var prim = $("#prim").val();
+               var segun = $("#segun").val();
+               $.get("exe.php",{rede : rede, mask : mask, prim : prim, segun : segun}, function (data) {
                    $("#opa").html("<table>" +
                        "<tr>" +
                        "<th>Host</th>"+
@@ -18,6 +21,9 @@
                        "<th>Primeiro endereco</th>"+
                        "<th>Ultimo endereco</th>"+
                        "<th>Broadcast</th>"+
+                       "<th>Mask em dec</th>"+
+                       "<th>Classe</th>"+
+                       "<th>Ele é</th>"+
                        "</tr>" +
                        "<tr>" +
                        "<td>"+data['host']+"</td>"+
@@ -26,6 +32,9 @@
                        "<td>"+data['primeiro_valido']+"</td>"+
                        "<td>"+data['ultimo_valido']+"</td>"+
                        "<td>"+data['broadcast']+"</td>"+
+                       "<td>255.255.255."+data['maskdec']+"</td>"+
+                       "<td>"+data['classe']+"</td>"+
+                       "<td>"+data['ipval']+"</td>"+
                        "</tr>"+
                        "</table>")
                })
@@ -34,12 +43,14 @@
     </script>
 </head>
 <body>
-    <h1>Calculo de Sub Rede</h1>
-    Informe o ip: <input type="number" name="rede" id="rede">
+    <h1>Cálculos de Sub Rede</h1>
+    <tr>
+    Informe o ip: <input type="number" id="prim">
+    <input type="number" id="segun">
+    <input type="number" name="rede" id="rede">
     /<input type="number" id="mask" name="mask">
     <button id="gerador">Gerar dados</button>
-    <div id="opa">
-
-    </div>
+        <div id="opa"></div>
+    </tr>
 </body>
 </html>
